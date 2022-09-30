@@ -1,3 +1,23 @@
+
+/*Variables*/
+
+/*Libreria*/
+.align-items-inherit {
+  align-items: inherit!important;
+}
+
+
+.bg-gray-400{
+  background-color: var(--bs-gray-400)!important;
+ }
+ .bg-gray-500{
+  background-color: var(--bs-gray-500)!important;
+ }
+.bg-gray-600{
+ background-color: var(--bs-gray-600)!important;
+}
+
+/*
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -39,3 +59,4 @@
 .read-the-docs {
   color: #888;
 }
+*/
