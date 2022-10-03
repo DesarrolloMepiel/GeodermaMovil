@@ -5,3 +5,9 @@ flex: 1;
 height: 1px;
 background: #eee;
 }
+.viewPass {
+    text-decoration: none;
+}
+.viewPass:hover {
+    cursor: pointer;
+}
