@@ -11,3 +11,11 @@ background: #eee;
 .viewPass:hover {
     cursor: pointer;
 }
+
+@media screen and (max-width: 600px) {
+    .movil-view {
+        margin-top: 0 !important;
+        box-shadow: none !important;
+        background-color: transparent !important;
+    }
+}

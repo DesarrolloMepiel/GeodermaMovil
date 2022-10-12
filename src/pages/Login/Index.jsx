@@ -1,34 +1,73 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+import { VerifySession } from '../../security/Index';
 
-import Swal from "sweetalert2";
+import { Alert } from "../../functions/Alert";
+
 import { HiEye, HiEyeOff, HiKey, HiUser } from "react-icons/hi";
 
 import "./style.css";
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  useEffect(() =>{
+    const isSession = VerifySession();
+    if(isSession) navigate('/panel');
+  },[])
+
+
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const TOKEN = import.meta.env.VITE_BASE_URL;
+  
   const [inValidation, setInValidation] = useState(false);
   const [viewPass, setViewPass] = useState(false);
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
-  const Session = (e) => {
+  const Session = async(e) => {
     e.preventDefault();
-    Swal.fire({
-      title: "Error!",
-      text: "Do you want to continue",
-      icon: "error",
-      confirmButtonText: "Cool",
-    });
-
     setInValidation(true);
+
+    // let myHeaders = new Headers({
+    //   'Authorization': `${TOKEN}`,
+    // });
+    // myHeaders.append('Authorization', TOKEN);
+    // myHeaders.append('Content-Type', 'application/json');
+    // headers: myHeaders,
+    
+    let requestOptions = {
+        method: 'POST',
+        body: JSON.stringify({username: user.username, password: user.password}),
+    };
+
+    fetch(`${BASE_URL}view/login/session.php`,requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      const { description, problems } = result.conflicts;
+      if(problems){
+        setInValidation(false);
+        Alert('error', description)
+        return;
+      }
+      const { user } = result;
+      localStorage.setItem('user', JSON.stringify(user));
+      setInValidation(false);
+      navigate('/panel');
+    })
+    .catch(err => {
+      console.log(err.message);
+      Alert('error',err.message);
+      setInValidation(false);
+    })
   };
 
   return (
     <>
-      <section className="vh-100 bg-light">
-        <div className="container py-5 h-100">
-          <div className="row d-flex align-items-center justify-content-center shadow bg-light" style={{height: '60%', marginTop: '150px'}}>
+      <section className="vh-80">
+        <div className="container h-100">
+          <div className="row d-flex align-items-center justify-content-center shadow bg-light p-5 movil-view" style={{height: 'auto', marginTop: '150px'}}>
             <div className="col-md-8 col-lg-7 col-xl-6">
               <img
                 src="assets/img/vespa.png"
@@ -36,7 +75,7 @@ const Login = () => {
                 alt="Phone image"
               />
             </div>
-            <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1" >
+            <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1 movil-view-form" >
               <form onSubmit={Session}>
                 <div className="form-floating mb-3">
                   <input
@@ -51,12 +90,13 @@ const Login = () => {
                   <label htmlFor="username">Nombre de usuario<HiUser/></label>
                 </div>
                 <div className="form-floating mb-4">
-                                    
+                     
                   <input
                     type={viewPass ? "text" : "password"}
                     className="form-control"
                     id="password"
                     placeholder="*****"
+                    autoComplete="on"
                     value={user.password}
                     onChange={e => setUser({...user, password: e.target.value})}
                     required
@@ -72,9 +112,8 @@ const Login = () => {
                   >
                     {inValidation ? (
                       <>
-                        {" "}
                         <span
-                          class="spinner-grow spinner-grow-sm"
+                          className="spinner-grow spinner-grow-sm"
                           role="status"
                           aria-hidden="true"
                         ></span>
@@ -82,7 +121,7 @@ const Login = () => {
                       </>
                     ) : (
                       "Iniciar Sesión"
-                    )}
+                      )}
                   </button>
                 </div>
               </form>
