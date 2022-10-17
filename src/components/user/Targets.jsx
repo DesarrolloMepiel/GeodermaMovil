@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import { ImTicket, ImSpinner9 } from "react-icons/im";
 import ImageGrid from '../../components/loading/home';
 
 const Target = (props) => {
+  const [inValidation, setInValidation] = useState(false);
   const { isLoadingPetition, petition } = props;
   const { empty,laboratory,status,ubication,warehouse } = petition;
+  
   return (
     <>
       <section className="">
@@ -56,19 +59,18 @@ const Target = (props) => {
                     style={{ backgroundColor: status === 'activo' ? "green" : "#DC5C04", color: 'white'}}
                     // disabled={inValidation}
                   >
-                      {status === 'activo' ? <>Comenzar <ImTicket /></> : <>Continuar <ImSpinner9 /></>}
-                    {/* {inValidation ? (
+                    {inValidation ? (
                       <>
                         <span
                           className="spinner-grow spinner-grow-sm"
                           role="status"
                           aria-hidden="true"
                         ></span>
-                        {"  "}Validando...
+                        Validando...
                       </>
                     ) : (
-                      "Iniciar Sesión"
-                      )} */}
+                      status === 'activo' ? <><ImTicket /> Comenzar</> : <><ImSpinner9 /> Continuar</>
+                      )}
                   </button>
                 </div>
             </div>

@@ -13,7 +13,7 @@ const Nav = (props) => {
     <nav className="navbar navbar-expand-lg bg-light">
       <div className="container-fluid">
         <a className="navbar-brand text-uppercase fs-6 fw-bold">
-          <img src="assets/img/vespa.png"  alt="vespa" width={80}/>
+          <img src="/assets/img/vespa.png"  alt="vespa" width={80}/>
         </a>
         <div id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">

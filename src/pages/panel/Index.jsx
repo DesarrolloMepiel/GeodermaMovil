@@ -40,7 +40,6 @@ const MainPanel = () => {
       const { empty } = result.response;
       setPetition(result.response);
       if(empty) {
-        // console.log('se repite la busqueda');
         setLoadingPetition(false);
         searchPetitions(id);
         return;
@@ -54,7 +53,6 @@ const MainPanel = () => {
     <>
       <NavBar user={user} DestroySession={DestroySession} navigate={navigate}/>
       <Target petition={petition} isLoadingPetition={isLoadingPetition}/>
-
     </>
   );
 };

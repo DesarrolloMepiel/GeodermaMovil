@@ -13,12 +13,12 @@ const Login = () => {
 
   useEffect(() =>{
     const isSession = VerifySession();
-    if(isSession) navigate('/panel');
+    if(isSession) navigate('/panel/petition');
   },[])
 
 
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  const TOKEN = import.meta.env.VITE_BASE_URL;
+  const TOKEN = import.meta.env.VITE_TOKEN;
   
   const [inValidation, setInValidation] = useState(false);
   const [viewPass, setViewPass] = useState(false);
@@ -29,16 +29,14 @@ const Login = () => {
   const Session = async(e) => {
     e.preventDefault();
     setInValidation(true);
-
-    // let myHeaders = new Headers({
-    //   'Authorization': `${TOKEN}`,
-    // });
-    // myHeaders.append('Authorization', TOKEN);
-    // myHeaders.append('Content-Type', 'application/json');
-    // headers: myHeaders,
-    
+  
     let requestOptions = {
         method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': TOKEN
+        },
         body: JSON.stringify({username: user.username, password: user.password}),
     };
 
@@ -54,7 +52,7 @@ const Login = () => {
       const { user } = result;
       localStorage.setItem('user', JSON.stringify(user));
       setInValidation(false);
-      navigate('/panel');
+      navigate('/panel/petition');
     })
     .catch(err => {
       console.log(err.message);
@@ -70,7 +68,7 @@ const Login = () => {
           <div className="row d-flex align-items-center justify-content-center shadow bg-light p-5 movil-view" style={{height: 'auto', marginTop: '150px'}}>
             <div className="col-md-8 col-lg-7 col-xl-6">
               <img
-                src="assets/img/vespa.png"
+                src="/assets/img/vespa.png"
                 className="img-fluid"
                 alt="Phone image"
               />
