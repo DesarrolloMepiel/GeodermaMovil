@@ -4,7 +4,7 @@ import ImageGrid from '../../components/loading/home';
 
 const Target = (props) => {
   const [inValidation, setInValidation] = useState(false);
-  const { isLoadingPetition, petition } = props;
+  const { isLoadingPetition, petition, nexStep } = props;
   const { empty,laboratory,status,ubication,warehouse } = petition;
   
   return (
@@ -58,6 +58,7 @@ const Target = (props) => {
                     className="btn btn-lg btn-block text-uppercase w-100"
                     style={{ backgroundColor: status === 'activo' ? "green" : "#DC5C04", color: 'white'}}
                     // disabled={inValidation}
+                    onClick={() => nexStep(petition)}
                   >
                     {inValidation ? (
                       <>
