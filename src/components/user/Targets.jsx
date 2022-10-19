@@ -3,8 +3,7 @@ import { ImTicket, ImSpinner9 } from "react-icons/im";
 import ImageGrid from '../../components/loading/home';
 
 const Target = (props) => {
-  const [inValidation, setInValidation] = useState(false);
-  const { isLoadingPetition, petition, nexStep } = props;
+  const { isLoadingPetition, petition, nexStep, inValidation } = props;
   const { empty,laboratory,status,ubication,warehouse } = petition;
   
   return (
@@ -57,17 +56,17 @@ const Target = (props) => {
                     type="submit"
                     className="btn btn-lg btn-block text-uppercase w-100"
                     style={{ backgroundColor: status === 'activo' ? "green" : "#DC5C04", color: 'white'}}
-                    // disabled={inValidation}
+                    disabled={inValidation}
                     onClick={() => nexStep(petition)}
                   >
                     {inValidation ? (
                       <>
                         <span
-                          className="spinner-grow spinner-grow-sm"
+                          className="spinner-grow spinner-grow-sm mx-2"
                           role="status"
                           aria-hidden="true"
                         ></span>
-                        Validando...
+                        Consultando
                       </>
                     ) : (
                       status === 'activo' ? <><ImTicket /> Comenzar</> : <><ImSpinner9 /> Continuar</>

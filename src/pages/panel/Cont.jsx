@@ -1,45 +1,54 @@
-import {goScanner, scanner} from './Camera'; 
-import './styles.css';
+import { goScanner } from "./Camera";
+import "./styles.css";
 
-const Counting = () => {
+const Counting = (props) => {
+  const { products } = props;
   return (
     <>
-      <h2>Scanner</h2>
-      <button onClick={() => goScanner()}>Hola</button>
-      <a href="//parzibyte.me/blog">By Parzibyte</a>
-      <p id="resultado">Aquí aparecerá el código</p>
-      <p>A continuación, el contenedor: </p>
-
-      <button
-        type="button"
-        className="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-      >
-        Launch demo modal
-      </button>
-
-      <div
-        className="modal fade"
-        id="exampleModal"
-        tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-        data-bs-backdrop="static"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
-                Modal title
-              </h5>
-            </div>
-            <div className="modal-body">
-              <div id="contenedor"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <h2>Conteo</h2>
+      {/* <table data-toggle="table" data-search="true" data-show-columns="true">
+        <thead>
+          <tr className="tr-class-1">
+            <th data-field="name" rowSpan="2" data-valign="middle">
+              Name
+            </th>
+            <th colSpan="2">Detail</th>
+          </tr>
+          <tr className="tr-class-2">
+            <th data-field="star">Stars</th>
+            <th data-field="forks">Forks</th>
+            <th data-field="description">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            id="tr-id-1"
+            className="tr-class-1"
+            data-title="bootstrap table"
+            data-object='{"key": "value"}'
+          >
+            <td
+              id="td-id-1"
+              className="td-class-1"
+              data-title="bootstrap table"
+            >
+              <a
+                href="https://github.com/wenzhixin/bootstrap-table"
+                target="_blank"
+              >
+                bootstrap-table
+              </a>
+            </td>
+            <td data-value="526">8827</td>
+            <td data-text="122">3603</td>
+            <td data-i18n="Description">
+              An extended Bootstrap table with radio, checkbox, sort,
+              pagination, and other added features. (supports twitter bootstrap
+              v2 and v3)
+            </td>
+          </tr>
+        </tbody>
+      </table> */}
     </>
   );
 };

@@ -12,7 +12,6 @@ import MainPanel from "../pages/panel/Index";
 // Scanner
 import Scan from "../pages/panel/Scan";
 
-
 const Router = () => {
   const navigate = useNavigate();
   return (

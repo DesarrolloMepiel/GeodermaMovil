@@ -14,8 +14,10 @@ const MainPanel = () => {
   const [isLoadingPetition, setLoadingPetition] = useState(true);
   const [user, setUser] = useState();
   const [petition, setPetition] = useState({empty:false});
-  const [state, setState] = useState('petition');
-  // const [state, setState] = useState('count');
+  const [inValidation, setInValidation] = useState(false);
+  // const [state, setState] = useState('petition');
+  const [state, setState] = useState('count');
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const session = VerifySession();
@@ -62,6 +64,7 @@ const MainPanel = () => {
   }
 
   const nexStep = petition =>{
+    setInValidation(true);
     const { status, id, idlaboratory, idsaplaboratory, idtimes, times, ubication, idubication } = petition;
     const requestOptions = {
       method: 'POST',
@@ -88,8 +91,12 @@ const MainPanel = () => {
       
       if(problems) {
         Alert('error', description);
+        setInValidation(false);
         return;
       }
+      const { message } = result;
+      setProducts(message)
+      setInValidation(false);
       setState('count')
       console.table(result.message);
     })
@@ -100,11 +107,11 @@ const MainPanel = () => {
   return isLoading ? (<div className='d-flex justify-content-center align-items-center mt-5'><ImageGrid /></div>) :
   (
     <>
+    <NavBar user={user} DestroySession={DestroySession} navigate={navigate}/>
       {state === 'petition' && <>
-      <NavBar user={user} DestroySession={DestroySession} navigate={navigate}/>
-      <Target petition={petition} isLoadingPetition={isLoadingPetition} nexStep={nexStep}/>
+      <Target petition={petition} isLoadingPetition={isLoadingPetition} nexStep={nexStep} inValidation={inValidation}/>
       </> }
-      {state == 'count' && <Count />}
+      {state == 'count' && <Count products={products} />}
     </>
   );
 };
