@@ -15,8 +15,8 @@ const MainPanel = () => {
   const [user, setUser] = useState();
   const [petition, setPetition] = useState({empty:false});
   const [inValidation, setInValidation] = useState(false);
-  // const [state, setState] = useState('petition');
-  const [state, setState] = useState('count');
+  const [state, setState] = useState('petition');
+  // const [state, setState] = useState('count');
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -94,15 +94,21 @@ const MainPanel = () => {
         setInValidation(false);
         return;
       }
+      // console.log(result)
       const { message } = result;
       setProducts(message)
       setInValidation(false);
       setState('count')
-      console.table(result.message);
     })
     .catch(error => Alert('error', error.message))
   }
 
+  const resetCount = () =>{
+    setInValidation(true);
+    setProducts([])
+    setState('petition')
+    setInValidation(false);
+  }
 
   return isLoading ? (<div className='d-flex justify-content-center align-items-center mt-5'><ImageGrid /></div>) :
   (
@@ -111,7 +117,7 @@ const MainPanel = () => {
       {state === 'petition' && <>
       <Target petition={petition} isLoadingPetition={isLoadingPetition} nexStep={nexStep} inValidation={inValidation}/>
       </> }
-      {state == 'count' && <Count products={products} />}
+      {state == 'count' && <Count products={products} resetCount={resetCount} />}
     </>
   );
 };

@@ -18,3 +18,18 @@ canvas.drawingBuffer{
 .modal-custom-body {
 	height: 21rem !important;
 }
+
+.hr-info{
+	border: 5px solid !important;
+	color: #DCE200 !important;
+	opacity: 1;
+}
+.ch {
+	height: 90vh !important;
+}
+
+@media (max-width: 600px) {
+	.container-info h2{
+		text-align: center !important;
+	}
+}

@@ -18,7 +18,7 @@ const Target = (props) => {
               empty ? 
                 <div className="d-flex flex-column justify-content-center align-items-center">
                   <hr className="w-100 mt-1 mb-3" style={styles.divider}/>
-                  <h2 className="text-uppercase fw-bold">Sin peticiones</h2>
+                  <h2 className="fs-2 text-uppercase fw-bold mb-3">Sin peticiones</h2>
                   <hr className="w-100 mt-1 mb-3" style={styles.divider}/>
                 </div> 
               :

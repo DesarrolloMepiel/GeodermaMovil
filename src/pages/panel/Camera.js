@@ -1,11 +1,11 @@
-export const goScanner = () => {
-	scanner();
+export const goScanner = (search) => {
+	scanner(search);
 	$('#exampleModal').modal('show');
 	$('canvas').addClass('hidden'); 
 }
 
-export const scanner = () => {
-	const $resultados = document.querySelector("#resultado");
+export const scanner = (search) => {
+	// const $resultados = document.querySelector("#resultado");
 	Quagga.init({
 		inputStream: {
 			constraints: {
@@ -31,11 +31,12 @@ export const scanner = () => {
 	});
 
 	Quagga.onDetected((data) => {
-		$resultados.textContent = data.codeResult.code;
+		// $resultados.textContent = data.codeResult.code;
 		// Imprimimos todo el data para que puedas depurar
 		console.log(data);
 		$('#exampleModal').modal('hide');
 		// $('#contenedor').hide();
+		search = data;
 		Quagga.stop(data);
 	});
 }
