@@ -64,8 +64,8 @@ const MainPanel = () => {
   }
 
   const nexStep = petition =>{
+    const { status, id, idlaboratory, idsaplaboratory, idtimes, times, ubication, idubication, idpropertie, propertie, warehouse, idwarehouse } = petition;
     setInValidation(true);
-    const { status, id, idlaboratory, idsaplaboratory, idtimes, times, ubication, idubication } = petition;
     const requestOptions = {
       method: 'POST',
       mode: 'cors',
@@ -81,10 +81,14 @@ const MainPanel = () => {
         idtimes,
         times,
         ubication, 
-        idubication
+        idubication,
+        idpropertie, 
+        propertie, 
+        warehouse, 
+        idwarehouse
       })
     }
-    fetch(`${BASE_URL}/view/petitions/verify.php`,requestOptions)
+    fetch(`${BASE_URL}view/petitions/verify.php`,requestOptions)
     .then(response => response.json())
     .then(result => {
       const {description, problems} = result.conflicts;
@@ -94,7 +98,6 @@ const MainPanel = () => {
         setInValidation(false);
         return;
       }
-      // console.log(result)
       const { message } = result;
       setProducts(message)
       setInValidation(false);

@@ -13,6 +13,7 @@ const Counting = (props) => {
   const TOKEN = import.meta.env.VITE_TOKEN;
   const {resetCount} = props;
   const { laboratory, quantity, ubication, products, idpetition, idcount} = props.products;
+
   const [search, setSearch] = useState("");
   const [information, setInformation] = useState({
     laboratory: "",
@@ -28,6 +29,9 @@ const Counting = (props) => {
     quantity: "",
   });
   const [editID, setEditID] = useState(null);
+  const [ batchMatch, setBatchMatch ] = useState(true)
+  const [ dateMatch, setDateMatch ] = useState(true)
+
 
   useEffect(() => {
     setProductos(products);
@@ -128,7 +132,7 @@ const Counting = (props) => {
         const { description, problems } = result.conflicts;
 
         if (problems) {
-          console.log(description);
+          Alert('error',description);
           return;
         }
         const { message } = result;
@@ -140,7 +144,7 @@ const Counting = (props) => {
         } else {
           data = message.products;
         }
-        console.log(activeSearch, data.length, data)
+        // console.log(activeSearch, data.length, data)
         if(activeSearch){
           if(data.length === 0){
             setSearch('');
@@ -179,6 +183,8 @@ const Counting = (props) => {
     });
     setEditID(null);
     $("#captureItem").modal("hide");
+    setBatchMatch(true);
+    setDateMatch(true);
   };
 
   const finished = () => {
@@ -280,6 +286,10 @@ const Counting = (props) => {
         setNewData={setNewData}
         clearFormModal={clearFormModal}
         loading={loading}
+        setBatchMatch={setBatchMatch}
+        setDateMatch={setDateMatch}
+        batchMatch={batchMatch}
+        dateMatch={dateMatch}
       />
     </>
   ) : (

@@ -4,7 +4,7 @@ import ImageGrid from '../../components/loading/home';
 
 const Target = (props) => {
   const { isLoadingPetition, petition, nexStep, inValidation } = props;
-  const { empty,laboratory,status,ubication,warehouse } = petition;
+  const { empty,laboratory,status,ubication,warehouse, propertie } = petition;
   
   return (
     <>
@@ -44,8 +44,11 @@ const Target = (props) => {
                   <h2 className="fs-4 fw-bold text-primary mb-3">
                     Almacen: <span className="text-uppercase">{warehouse}</span>
                   </h2>
-                  <h2 className="fs-4 fw-bold text-primary">
+                  <h2 className="fs-4 fw-bold text-primary mb-3">
                     Ubicacion: <span className="text-uppercase">{ubication}</span>
+                  </h2>
+                  <h2 className="fs-4 fw-bold text-primary">
+                    Propiedades: <span className="text-uppercase">{propertie}</span>
                   </h2>
                 </div>
               </div>

@@ -2,13 +2,11 @@ import { useState } from 'react';
 import { Input } from "react-rainbow-components";
 
 const ModalScan = props => {
-  const { setItem, newData, setNewData, clearFormModal, loading } = props;
+  const { setItem, newData, setNewData, clearFormModal, loading, setBatchMatch, setDateMatch, batchMatch, dateMatch } = props;
   const inputStyles = {
     width: 300,
   };
   
-  const [ batchMatch, setBatchMatch ] = useState(true)
-  const [ dateMatch, setDateMatch ] = useState(true)
 
   return (
     <>
