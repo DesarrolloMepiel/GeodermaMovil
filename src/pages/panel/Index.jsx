@@ -99,7 +99,7 @@ const MainPanel = () => {
         return;
       }
       const { message } = result;
-      setProducts(message)
+      setProducts(message);
       setInValidation(false);
       setState('count')
     })

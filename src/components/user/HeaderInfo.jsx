@@ -1,5 +1,5 @@
 const Header = props => {
-    const {laboratory, quantity, ubication} = props
+    const {laboratory, quantity, ubication, propertie, warehouse} = props
     return (
         <div>
         <hr className="rounded-pill m-2 hr-info" />
@@ -15,6 +15,16 @@ const Header = props => {
           <div className="mx-5">
             <h2 className="text-uppercase fw-bold">
               Ubicación: <span className="text-primary">{ubication}</span>
+            </h2>
+          </div>
+          <div className="mx-5">
+            <h2 className="text-uppercase fw-bold">
+              Almacen: <span className="text-primary">{warehouse}</span>
+            </h2>
+          </div>
+          <div className="mx-5">
+            <h2 className="text-uppercase fw-bold">
+              Propiedad: <span className="text-primary">{propertie}</span>
             </h2>
           </div>
         </div>
