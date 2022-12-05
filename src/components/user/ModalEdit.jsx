@@ -61,16 +61,11 @@ const ModalEdit = props => {
   
                     <Input
                       label="Lote"
-                      placeholder="Lote"
                       type="text"
                       className="rainbow-p-around_medium pb-0"
                       value={newDataEdit.batch}
                       readOnly
-                      style={inputStyles}
-                      required
                     />
-  
-
   
                     <Input
                       label="Contado"
@@ -78,18 +73,14 @@ const ModalEdit = props => {
                       className="rainbow-p-around_medium pb-0"
                       value={newDataEdit.quantity}
                       readOnly
-                      style={inputStyles}
-                      required
                     />
 
                     <Input
                       label="Fecha de vencimiento"
                       type="date"
-                      className={true ? "rainbow-p-around_medium pb-0" : "rainbow-p-around_medium pb-2"}
+                      className={"rainbow-p-around_medium pb-0"}
                       value={newDataEdit.date}
                       readOnly
-                      style={inputStyles}
-                      required
                     />
   
   
@@ -100,7 +91,6 @@ const ModalEdit = props => {
                       className="rainbow-p-around_medium"
                       value={newDataEdit.newquantity}
                       onChange={e => setNewDataEdit({...newDataEdit, newquantity: e.target.value})}
-                      style={inputStyles}
                     />
                     <div className="d-flex justify-content-center p-2">
                       <button className="btn btn-success text-uppercase"

@@ -33,10 +33,11 @@ export const scanner = (search) => {
 	Quagga.onDetected((data) => {
 		// $resultados.textContent = data.codeResult.code;
 		// Imprimimos todo el data para que puedas depurar
-		console.log(data);
+		// console.log(data);
 		$('#exampleModal').modal('hide');
 		// $('#contenedor').hide();
-		search = data;
+		code = data[0] === 0 ? datastr.slice(1, -1) : data;
+		search = code;
 		Quagga.stop(data);
 	});
 }

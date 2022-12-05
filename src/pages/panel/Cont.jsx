@@ -9,6 +9,7 @@ import Header from "../../components/user/HeaderInfo";
 
 import Picking from './Picking';
 import Edit from './EditPicking';
+import Finished from '../../components/user/FinishedCount';
 
 const Counting = (props) => {
   const RUTA = import.meta.env.VITE_BASE_URL;
@@ -18,6 +19,7 @@ const Counting = (props) => {
 
   const [option, setOption] = useState("count");
   const [search, setSearch] = useState("");
+  const [sku, setSku] = useState('');
   const [information, setInformation] = useState({
     laboratory: "",
     quantity: "",
@@ -30,9 +32,12 @@ const Counting = (props) => {
   const [newData, setNewData] = useState({
     batch: "",
     date: "",
-    quantity: "",
+    quantity: 0,
   });
-  const [newDataEdit, setNewDataEdit] = useState({});
+  const [newDataEdit, setNewDataEdit] = useState({
+    newquantity: 0, 
+    date: ''
+  });
   const [editID, setEditID] = useState(null);
   const [ batchMatch, setBatchMatch ] = useState(true)
   const [ dateMatch, setDateMatch ] = useState(true)
@@ -114,23 +119,25 @@ const Counting = (props) => {
 
     Quagga.onDetected((data) => {
       $("#exampleModal").modal("hide");
-      setSearch(data.codeResult.code);
-      findsku(data.codeResult.code);
+      const code = data.codeResult.code[0] === 0 ? data.codeResult.code.slice(1, -1) : data.codeResult.code;
+      setSearch(code);
+      findsku(code);
       Quagga.stop(data);
     });
   };
 
   const findsku = (code) => {
     setLoading(true);
-    const finder = "3337872414107";
-    const filter = productos.filter(({ sku }) => sku === code);
-    setProductos(filter);
+    // const finder = "3337872414107";
+    const filter = productos.filter(({ sku }) => sku.substring(sku.length - 4) === code);
+    filter.length > 0 ? setProductos(filter) : setSearch('Sin Resultados');
     setLoading(false);
   };
 
   const resetProducts = () => {
     setLoading(true);
     setSearch("");
+    setSku('');
     setProductos(lastproductos);
     setLoading(false);
   };
@@ -155,7 +162,7 @@ const Counting = (props) => {
         idcont: idcount,
         idproduct: id,
         idpetition,
-        batch: newData.batch,
+        batch: newData.batch.toUpperCase(),
         expiration,
         quantity,
       }),
@@ -322,6 +329,10 @@ const Counting = (props) => {
               <Picking 
                 productos={productos} 
                 search={search} 
+                setSearch={setSearch} 
+                sku={sku}
+                setSku={setSku}
+                findsku={findsku}
                 resetProducts={resetProducts} 
                 goScanner={goScanner} 
                 openModalItem={openModalItem} 
@@ -332,51 +343,9 @@ const Counting = (props) => {
               productsEdit={productsEdit} 
               openModalEdit={openModalEdit} 
               closeModalEdit={closeModalEdit} 
-              getItemsEdit={getItemsEdit} />
-    }
-     {/* { <div className="w-100 ch">
-        <div className="container-info">
-          <Header
-            laboratory={information.laboratory}
-            ubication={information.ubication}
-            quantity={information.quantity}
-            propertie={information.propertie}
-            warehouse={information.warehouse}
-          />
-          <div className="d-flex flex-row flex-nowrap justify-content-center w-100 p-3">
-            <input
-              type="text"
-              className="border border-end-0 rounded-start"
-              placeholder="Busca el sku"
-              value={search}
-              readOnly
+              getItemsEdit={getItemsEdit} 
             />
-            <button
-              className={`${
-                search ? "bg-warning" : "bg-primary"
-              } text-white text-uppercase fs-6 btn-primary border border-start-0 rounded-end`}
-              onClick={() => (search ? resetProducts() : goScanner())}
-            >
-              {search ? "Restablecer" : "Buscar"}
-            </button>
-          </div>
-          <div className="d-flex flex-row flex-wrap justify-content-center">
-            {loading ? (
-              <>
-                <LoadinCards />
-              </>
-            ) : (
-              productos.map((product) => (
-                <CardProduct
-                  key={product.id}
-                  product={product}
-                  openModalItem={openModalItem}
-                />
-              ))
-            )}
-          </div>
-        </div>
-      </div>} */}
+    }
 
       <ModalScan
         setItem={setItem}
@@ -400,6 +369,14 @@ const Counting = (props) => {
     </>
   ) : (
     <>
+      <div className="d-flex flex-row justify-content-center">
+        <div className="mx-2">
+          <a className={option === 'count' ? "text-uppercase text-white bg-primary p-1 fw-bold" : "text-uppercase p-1 fw-bold"} onClick={() => setOption('count')}>Conteo</a>
+        </div>
+        <div className="mx-2">
+          <a className={option === 'edit' ? "text-uppercase text-white bg-primary p-1 fw-bold" : "text-uppercase p-1 fw-bold"} onClick={() => setOption('edit')}>Editar</a>
+        </div>
+      </div>
       <div className="w-100 ch">
         <div className="container-info h-100">
           <Header
@@ -407,13 +384,28 @@ const Counting = (props) => {
             ubication={information.ubication}
             quantity="TERMINADO"
           />
-          <h2 className="text-uppercase text-center text-success fs-2 fw-bold my-3">Conteo terminado</h2>
-          <h2 className="text-center fs-4 my-2">Enviar conteo al administrador</h2>
-          <div className="d-flex justify-content-center">
-            <button className="btn btn-primary text-uppercase" onClick={finished}>Cerrar Conteo</button>
-          </div>
+          {option === 'count' ? 
+            <Finished finished={finished} />
+          : 
+            <Edit 
+              productsEdit={productsEdit} 
+              openModalEdit={openModalEdit} 
+              closeModalEdit={closeModalEdit} 
+              getItemsEdit={getItemsEdit} 
+            />
+          }
         </div>
       </div>
+
+      
+
+      <ModalEdit 
+        closeModalEdit={closeModalEdit}
+        newDataEdit={newDataEdit}
+        setNewDataEdit={setNewDataEdit}
+        loading={loading}
+        updateQuantityItems={updateQuantityItems}
+      />
     </>
   );
 };
