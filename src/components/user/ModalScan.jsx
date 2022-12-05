@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Input } from "react-rainbow-components";
 
 const ModalScan = props => {

@@ -120,8 +120,9 @@ const Counting = (props) => {
     Quagga.onDetected((data) => {
       $("#exampleModal").modal("hide");
       const code = data.codeResult.code[0] === 0 ? data.codeResult.code.slice(1, -1) : data.codeResult.code;
-      setSearch(code);
-      findsku(code);
+      const lastCode = code.substring(code.length - 4);
+      setSearch(lastCode);
+      findsku(lastCode);
       Quagga.stop(data);
     });
   };
